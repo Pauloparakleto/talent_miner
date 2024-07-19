@@ -36,8 +36,7 @@ jobs:
           ruby-version: 2.7.2
           # runs 'bundle install' and cache installed gems
           bundler-cache: false
-      - name: Run bundle
-        run: bundle
+        run: bundle install
  
       - name: Run migrations
         env:
