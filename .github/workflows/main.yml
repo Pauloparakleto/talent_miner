@@ -30,13 +30,12 @@ jobs:
           --health-retries 5
 
     steps:
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
+      - uses: action/checkout@v4
+      - name: Set up Ruby 2.7.2
+        uses: ruby/setup-ruby@ec02537da5712d66d4d50a0f33b7eb52773b5ed1
         with:
-          ruby-version: 2.7.2
-          # runs 'bundle install' and cache installed gems
-          bundler-cache: false
-        run: bundle install
+          ruby-version: "2.7.2"
+      - run: bundle install
  
       - name: Run migrations
         env:
