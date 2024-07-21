@@ -47,3 +47,5 @@ gem "rspec-rails", "~> 5.1"
 gem "shoulda-matchers", "~> 5.3"
 
 gem "faker", "~> 3.4"
+
+gem "good_job", "~> 3.99"
