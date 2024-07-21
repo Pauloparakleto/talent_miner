@@ -12,7 +12,8 @@ class V1::Recruiter::JobsController < ApplicationController
 
   def create
     @recruiter_job = Recruiter::Job.new(recruiter_job_params)
-    if @recruiter_job.save
+    if @recruiter_job.valid?
+      Recruiter::JobCreatorJob.perform_later(recruiter_job_params)
       render json: @recuiter_job, status: :created, location: "v1/recruiter/jobs/#{@recruiter_job.id}"
     else
       render json: @recruiter_job.errors, status: :unprocessable_entity
@@ -32,6 +33,7 @@ class V1::Recruiter::JobsController < ApplicationController
   end
 
   private
+    
     def set_recruiter_job
       @recruiter_job = Recruiter::Job.find(params[:id])
     end
