@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe "/recruiter/jobs", type: :request do
+  include ActiveJob::TestHelper
+
   let!(:recruiter) { Recruiter.create(recruiter_valid_attributes) }
   let(:recruiter_valid_attributes) {
     {
@@ -50,8 +52,10 @@ RSpec.describe "/recruiter/jobs", type: :request do
     context "with valid parameters" do
       it "creates a new Recruiter::Job" do
         expect {
-          post v1_recruiter_jobs_url,
+          perform_enqueued_jobs do
+            post v1_recruiter_jobs_url,
                params: { recruiter_job: valid_attributes }, headers: valid_headers, as: :json
+          end
         }.to change(Recruiter::Job, :count).by(1)
       end
 
