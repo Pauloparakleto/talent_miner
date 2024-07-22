@@ -9,6 +9,7 @@ RSpec.describe Public::Submission, type: :model do
   describe "validations" do
     it { should validate_presence_of(:job_id) }
     it { should validate_presence_of(:talent_id) }
+    it { should validate_uniqueness_of(:talent_id).scoped_to(:job_id) }
   end
 
   describe "delegations" do
@@ -16,38 +17,5 @@ RSpec.describe Public::Submission, type: :model do
     it { should delegate_method(:email).to(:talent) }
     it { should delegate_method(:mobile_phone).to(:talent) }
     it { should delegate_method(:resume).to(:talent) }
-  end
-
-  context "when diferent person submit to the same job" do
-    include_context "with Recruiter::Job"
-    let(:talent) do
-      Talent.create(name: Faker::Name.name, email: Faker::Internet.email, phone_number: Faker::PhoneNumber.cell_phone)
-    end
-    let(:talent_2) do
-      Talent.create(name: Faker::Name.name, email: Faker::Internet.email, phone_number: Faker::PhoneNumber.cell_phone)
-    end
-
-    let(:submission) { Public::Submission.create(job_id: job.id, talent_id: talent.id) }
-
-    it "is valid" do
-      submission = Public::Submission.build(job_id: job.id, talent_id: talent_2.id)
-
-      expect(submission.valid?).to eq(true)
-    end
-  end
-
-
-  context "when same person submit to the same job twice" do
-    include_context "with Recruiter::Job"
-    let(:talent) do
-      Talent.create(name: Faker::Name.name, email: Faker::Internet.email, phone_number: Faker::PhoneNumber.cell_phone)
-    end
-    let(:submission) { Public::Submission.create(job_id: job.id, talent_id: talent.id) }
-
-    it "is invalid" do
-      submission = Public::Submission.build(job_id: job.id, talent_id: talent.id)
-
-      expect(submission.valid?).to eq(false)
-    end
   end
 end
