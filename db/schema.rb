@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_07_22_022419) do
+ActiveRecord::Schema.define(version: 2024_07_22_154708) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -37,6 +37,15 @@ ActiveRecord::Schema.define(version: 2024_07_22_022419) do
     t.index ["scheduled_at"], name: "index_good_jobs_on_scheduled_at", where: "(finished_at IS NULL)"
   end
 
+  create_table "public_submissions", force: :cascade do |t|
+    t.bigint "talent_id"
+    t.bigint "job_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["job_id"], name: "index_public_submissions_on_job_id"
+    t.index ["talent_id"], name: "index_public_submissions_on_talent_id"
+  end
+
   create_table "recruiter_jobs", force: :cascade do |t|
     t.string "title", null: false
     t.string "description", null: false
@@ -58,6 +67,16 @@ ActiveRecord::Schema.define(version: 2024_07_22_022419) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_recruiters_on_email"
+  end
+
+  create_table "talents", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "email", null: false
+    t.string "mobile_phone", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["email"], name: "index_talents_on_email"
+    t.index ["mobile_phone"], name: "index_talents_on_mobile_phone"
   end
 
   add_foreign_key "recruiter_jobs", "recruiters"
