@@ -20,3 +20,9 @@ puts "Module Recruiter::Job"
     }
   )
 end
+
+puts "Module Talent"
+
+500.times do |_number|
+  Talent.create(name: Faker::Name.name, email: Faker::Internet.unique.email, mobile_phone: Faker::PhoneNumber.cell_phone)
+end
