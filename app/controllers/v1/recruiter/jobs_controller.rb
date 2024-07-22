@@ -21,7 +21,9 @@ class V1::Recruiter::JobsController < ApplicationController
   end
 
   def update
-    if @recruiter_job.update(recruiter_job_params)
+    @recruiter_job.assign_attributes(recruiter_job_params)
+    if @recruiter_job.valid?
+      Recruiter::JobUpdaterJob.perform_later(@recruiter_job.id, recruiter_job_params)
       render json: @recruiter_job, status: :ok, location: "v1/recruiter/jobs/#{@recruiter_job.id}"
     else
       render json: @recruiter_job.errors, status: :unprocessable_entity

@@ -92,8 +92,10 @@ RSpec.describe "/recruiter/jobs", type: :request do
 
       it "updates the requested recruiter_job" do
         job = Recruiter::Job.create! valid_attributes
-        patch v1_recruiter_job_url(job),
-              params: { recruiter_job: new_attributes }, headers: valid_headers, as: :json
+        perform_enqueued_jobs do
+          patch v1_recruiter_job_url(job),
+                params: { recruiter_job: new_attributes }, headers: valid_headers, as: :json
+        end
         job.reload
         expect(job.title).to eq(new_attributes.fetch(:title))
       end
