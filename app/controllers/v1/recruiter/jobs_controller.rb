@@ -1,8 +1,11 @@
 class V1::Recruiter::JobsController < ApplicationController
+  INITIAL_PAGE = 1
+  STATUS_ACTIVE = 1
+
   before_action :set_recruiter_job, only: %i[ show update destroy ]
 
   def index
-    @recruiter_jobs = Recruiter::Job.all
+    @recruiter_jobs = Recruiter::Job.order(:created_at).where(status: STATUS_ACTIVE).page params.fetch(:page, INITIAL_PAGE)
     render json: @recruiter_jobs, status: :ok, location: "v1/recruiter/jobs/"
   end
 

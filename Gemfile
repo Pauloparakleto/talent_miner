@@ -48,4 +48,6 @@ gem "shoulda-matchers", "~> 5.3"
 
 gem "faker", "~> 3.4"
 
-gem "good_job", "~> 3.99"
+gem "good_job", "2.0"
+
+gem "kaminari-activerecord", "~> 1.2"

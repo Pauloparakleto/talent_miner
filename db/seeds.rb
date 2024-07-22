@@ -6,3 +6,17 @@ puts "Module Recruiter"
     password: Faker::String.random(length: 7)
   )
 end
+
+recruiter = Recruiter.last
+
+puts "Module Recruiter::Job"
+
+500.times do |_number|
+  Recruiter::Job.create(
+    { title: Faker::Company.name, description: Faker::Company.catch_phrase,
+      start_date: Faker::Date.forward(days: 7), end_date: Faker::Date.forward(days: 14),
+      skills: ["ruby", "javascript"],
+      status: 1, recruiter_id: recruiter.id
+    }
+  )
+end
