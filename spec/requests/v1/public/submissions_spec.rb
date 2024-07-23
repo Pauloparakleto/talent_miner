@@ -25,7 +25,8 @@ RSpec.describe 'v1/public/submissions', type: :request do
 
     it 'renders a sucessfull response' do
       get v1_public_submissions_path, headers: valid_headers, as: :json
-      expect(response).to be_successfull
+      byebug
+      expect(response.status).to eq(200)
     end
   end
 end

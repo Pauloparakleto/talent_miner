@@ -17,5 +17,11 @@ RSpec.describe Public::Submission, type: :model do
     it { should delegate_method(:email).to(:talent) }
     it { should delegate_method(:mobile_phone).to(:talent) }
     it { should delegate_method(:resume).to(:talent) }
+    it { should delegate_method(:title).to(:job) }
+    it { should delegate_method(:description).to(:job) }
+    it { should delegate_method(:skills).to(:job) }
+    it { should delegate_method(:start_date).to(:job) }
+    it { should delegate_method(:end_date).to(:job) }
+    it { should delegate_method(:status).to(:job) }
   end
 end
