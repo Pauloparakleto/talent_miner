@@ -10,7 +10,7 @@ shared_context 'with Recruiter::Job' do
     }
   }
 
-  let(:valid_attributes) {
+  let(:job_valid_attributes) {
     { title: Faker::Company.name, description: Faker::Company.catch_phrase,
       start_date: Faker::Date.forward(days: 7), end_date: Faker::Date.forward(days: 14),
       skills: ["ruby", "javascript"],
@@ -18,5 +18,5 @@ shared_context 'with Recruiter::Job' do
     }
   }
 
-  let!(:job) { Recruiter::Job.create(valid_attributes) }
+  let!(:job) { Recruiter::Job.create(job_valid_attributes) }
 end

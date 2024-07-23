@@ -10,5 +10,9 @@ Rails.application.routes.draw do
     namespace :recruiter do
       resources :jobs, concerns: :paginatable
     end
+
+    namespace :public do
+      resources :submissions, concerns: :paginatable
+    end
   end
 end
