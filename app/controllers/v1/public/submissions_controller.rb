@@ -1,4 +1,4 @@
-class V1::Public::SubmissionsController < ApplicationController
+class V1::Public::SubmissionsController < V1::ApplicationController
   INITIAL_PAGE = 1
    
   before_action :set_submission, only: [:show, :destroy]
