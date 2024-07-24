@@ -1,4 +1,6 @@
 class Public::Submission < ApplicationRecord
+  paginates_per 100
+
   belongs_to :job, class_name: "Recruiter::Job"
   belongs_to :talent, class_name: "Talent"
 
