@@ -60,7 +60,7 @@ RSpec.describe 'v1/public/submissions', type: :request do
     context "with invalid parameters" do
       it "does not create a new Public::Submission" do
         expect {
-          post v1_public_submission_path,
+          post v1_public_submissions_path,
                params: { submission: invalid_attributes }, as: :json
         }.to change(Public::Submission, :count).by(0)
       end
@@ -79,7 +79,7 @@ RSpec.describe 'v1/public/submissions', type: :request do
 
     it "destroys the requested Submission" do
       expect {
-        delete v1_public_submission_path(submissions), headers: valid_headers, as: :json
+        delete v1_public_submission_path(submission), headers: valid_headers, as: :json
       }.to change(Public::Submission, :count).by(-1)
     end
   end

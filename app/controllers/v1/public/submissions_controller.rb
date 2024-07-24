@@ -1,7 +1,7 @@
 class V1::Public::SubmissionsController < ApplicationController
   INITIAL_PAGE = 1
    
-  before_action :set_submission, only: [:show]
+  before_action :set_submission, only: [:show, :destroy]
 
   def index
     @submissions = Public::Submission.order(:created_at).page params.fetch(:page, INITIAL_PAGE)
@@ -20,6 +20,10 @@ class V1::Public::SubmissionsController < ApplicationController
     else
       render json: @submission.errors, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    @submission.destroy
   end
 
   private
