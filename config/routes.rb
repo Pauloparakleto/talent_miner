@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     end
 
     namespace :public do
-      resources :submissions, concerns: :paginatable
+      resources :submissions, concerns: :paginatable, except: :update
     end
   end
 end
