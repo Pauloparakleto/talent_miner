@@ -13,12 +13,22 @@ class V1::Public::SubmissionsController < ApplicationController
   end
 
   def create
-    byebug
+    @submission = Public::Submission.new(submission_params)
+    if @submission.valid?
+      Public::SubmissionCreatorJob.perform_later(submission_params)
+      render :show, status: :created, location: "v1/public/submissions/#{@submission.id}"
+    else
+      render json: @submission.errors, status: :unprocessable_entity
+    end
   end
 
   private
 
   def set_submission
     @submission = Public::Submission.find(params[:id])
+  end
+
+  def submission_params
+    params.require(:submission).permit(:job_id, :talent_id)
   end
 end

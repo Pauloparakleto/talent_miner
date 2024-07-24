@@ -50,7 +50,7 @@ RSpec.describe 'v1/public/submissions', type: :request do
       end
 
       it "renders a JSON response with the new submission" do
-        post v1_public_submission_path,
+        post v1_public_submissions_path,
              params: { submission: valid_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:created)
         expect(response.content_type).to match(a_string_including("application/json"))
