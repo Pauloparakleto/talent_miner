@@ -1,4 +1,4 @@
-class V1::TalentsController < ApplicationController
+class V1::TalentsController < V1::ApplicationController
   INITIAL_PAGE = 1
 
   before_action :set_talent, only: [:show, :update, :destroy]
@@ -17,6 +17,10 @@ class V1::TalentsController < ApplicationController
     @talent = Talent.new(talent_params)
 
     if @talent.save
+      @talent.resume.attach(io: File.open(temp_file_path),
+                            filename: original_filename_param,
+                            content_type: file_content_type
+                           ) if file_param.present?
       render :show, status: :created
     else
       render json: @talent.errors, status: :unprocessable_entity
@@ -37,11 +41,27 @@ class V1::TalentsController < ApplicationController
 
   private
 
-    def set_talent
-      @talent = Talent.find(params[:id])
-    end
+  def file_param
+     params.fetch("resume", nil)
+  end
 
-    def talent_params
-      params.require(:talent).permit(:name, :email, :mobile_phone, :resume)
-    end
+  def original_filename_param
+    file_param.original_filename
+  end
+
+  def temp_file_path
+    file_param.tempfile
+  end
+
+  def file_content_type
+    file_param.content_type
+  end
+
+  def set_talent
+    @talent = Talent.find(params[:id])
+  end
+
+  def talent_params
+    params.require(:talent).permit(:name, :email, :mobile_phone, :resume)
+  end
 end
