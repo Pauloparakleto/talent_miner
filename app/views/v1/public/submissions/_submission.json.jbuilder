@@ -1,4 +1,6 @@
-json.extract! submission, :id, :title, :description, :start_date, :end_date, :status, :skills
+json.id submission.id if submission.persisted?
+
+json.extract! submission, :title, :description, :start_date, :end_date, :status, :skills
 
 json.job do
   json.id submission.job.id
