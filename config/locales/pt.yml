@@ -1,4 +1,7 @@
 pt:
+  errors:
+    messages:
+      taken: Já está em uso
   activerecord:
     errors:
       models:
