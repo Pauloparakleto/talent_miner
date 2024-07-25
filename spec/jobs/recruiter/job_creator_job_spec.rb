@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Recruiter::JobCreatorJob, type: :job do
   include ActiveJob::TestHelper
 
-  let!(:recruiter) { Recruiter.create(recruiter_valid_attributes) }
+  let(:recruiter) { Recruiter.create(recruiter_valid_attributes) }
   let(:recruiter_valid_attributes) {
     {
       name: Faker::Name.name,

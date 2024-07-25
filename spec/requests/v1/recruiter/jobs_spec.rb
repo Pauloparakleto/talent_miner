@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "/recruiter/jobs", type: :request do
   include ActiveJob::TestHelper
 
-  let!(:recruiter) { Recruiter.create(recruiter_valid_attributes) }
+  let(:recruiter) { Recruiter.create(recruiter_valid_attributes) }
   let(:recruiter_valid_attributes) {
     {
       name: Faker::Name.name,
@@ -34,7 +34,8 @@ RSpec.describe "/recruiter/jobs", type: :request do
 
   describe "GET /index" do
     it "renders a successful response" do
-      Recruiter::Job.create! valid_attributes
+      recruiter
+
       get v1_recruiter_jobs_url, headers: valid_headers, as: :json
       expect(response).to be_successful
     end

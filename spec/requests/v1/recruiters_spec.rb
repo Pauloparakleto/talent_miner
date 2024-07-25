@@ -3,9 +3,9 @@ require 'rails_helper'
 RSpec.describe "/V1::Recruiters", type: :request do
   let(:valid_attributes) {
     {
-      name: Faker::Name.name, 
+      name: Faker::Name.name,
       email: Faker::Internet.unique.email,
-      password: Faker::String.random(length: 7)
+      password: Faker::Lorem.word
     }
   }
 
@@ -13,7 +13,7 @@ RSpec.describe "/V1::Recruiters", type: :request do
     {
       name: nil,
       email: Faker::Internet.unique.email,
-      password: Faker::String.random(length: 7)
+      password: Faker::Lorem.word
     }
   }
 

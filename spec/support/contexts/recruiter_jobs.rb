@@ -1,16 +1,16 @@
 require 'spec_helper'
 
 shared_context 'with Recruiter::Job' do
-  let!(:recruiter) { Recruiter.create(recruiter_valid_attributes) }
+  let(:recruiter) { Recruiter.create(recruiter_valid_attributes) }
   let(:recruiter_valid_attributes) {
     {
       name: Faker::Name.name,
       email: Faker::Internet.unique.email,
-      password: Faker::String.random(length: 7)
+      password: Faker::Lorem.word
     }
   }
 
-  let(:valid_attributes) {
+  let(:job_valid_attributes) {
     { title: Faker::Company.name, description: Faker::Company.catch_phrase,
       start_date: Faker::Date.forward(days: 7), end_date: Faker::Date.forward(days: 14),
       skills: ["ruby", "javascript"],
@@ -18,5 +18,5 @@ shared_context 'with Recruiter::Job' do
     }
   }
 
-  let!(:job) { Recruiter::Job.create(valid_attributes) }
+  let!(:job) { Recruiter::Job.create(job_valid_attributes) }
 end

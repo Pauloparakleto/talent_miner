@@ -20,3 +20,17 @@ puts "Module Recruiter::Job"
     }
   )
 end
+
+puts "Module Talent"
+
+500.times do |_number|
+  Talent.create(name: Faker::Name.name, email: Faker::Internet.unique.email, mobile_phone: Faker::PhoneNumber.cell_phone)
+end
+
+puts "Public::Submission"
+
+talent_ids = Talent.all.limit(120).pluck(:id)
+job_ids = Recruiter::Job.all.limit(120).pluck(:id)
+submission_attributes = []
+talent_ids.each_with_index.map { |talent_id, index| submission_attributes << { talent_id: talent_id, job_id: job_ids[index]} }
+Public::Submission.create(submission_attributes)

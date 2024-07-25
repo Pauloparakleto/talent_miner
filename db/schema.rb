@@ -10,11 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_07_22_022419) do
+ActiveRecord::Schema.define(version: 2024_07_22_165147) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.bigint "byte_size", null: false
+    t.string "checksum", null: false
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
 
   create_table "good_jobs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "queue_name"
@@ -35,6 +56,15 @@ ActiveRecord::Schema.define(version: 2024_07_22_022419) do
     t.index ["cron_key", "created_at"], name: "index_good_jobs_on_cron_key_and_created_at"
     t.index ["queue_name", "scheduled_at"], name: "index_good_jobs_on_queue_name_and_scheduled_at", where: "(finished_at IS NULL)"
     t.index ["scheduled_at"], name: "index_good_jobs_on_scheduled_at", where: "(finished_at IS NULL)"
+  end
+
+  create_table "public_submissions", force: :cascade do |t|
+    t.bigint "talent_id"
+    t.bigint "job_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["job_id"], name: "index_public_submissions_on_job_id"
+    t.index ["talent_id"], name: "index_public_submissions_on_talent_id"
   end
 
   create_table "recruiter_jobs", force: :cascade do |t|
@@ -60,5 +90,16 @@ ActiveRecord::Schema.define(version: 2024_07_22_022419) do
     t.index ["email"], name: "index_recruiters_on_email"
   end
 
+  create_table "talents", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "email", null: false
+    t.string "mobile_phone", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["email"], name: "index_talents_on_email"
+    t.index ["mobile_phone"], name: "index_talents_on_mobile_phone"
+  end
+
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "recruiter_jobs", "recruiters"
 end
