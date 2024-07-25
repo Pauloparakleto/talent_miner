@@ -1,4 +1,4 @@
-class V1::Recruiter::JobsController < ApplicationController
+class V1::Recruiter::JobsController < V1::ApplicationController
   INITIAL_PAGE = 1
   STATUS_ACTIVE = 1
 
@@ -6,7 +6,7 @@ class V1::Recruiter::JobsController < ApplicationController
 
   def index
     @recruiter_jobs = Recruiter::Job.order(:created_at).where(status: STATUS_ACTIVE).page params.fetch(:page, INITIAL_PAGE)
-    render json: @recruiter_jobs, status: :ok, location: "v1/recruiter/jobs/"
+    render :index, location: "v1/recruiter/jobs/"
   end
 
   def show
@@ -17,7 +17,7 @@ class V1::Recruiter::JobsController < ApplicationController
     @recruiter_job = Recruiter::Job.new(recruiter_job_params)
     if @recruiter_job.valid?
       Recruiter::JobCreatorJob.perform_later(recruiter_job_params)
-      render json: @recuiter_job, status: :created, location: "v1/recruiter/jobs/#{@recruiter_job.id}"
+      render :show, status: :created, location: "v1/recruiter/jobs/#{@recruiter_job.id}"
     else
       render json: @recruiter_job.errors, status: :unprocessable_entity
     end
@@ -27,7 +27,7 @@ class V1::Recruiter::JobsController < ApplicationController
     @recruiter_job.assign_attributes(recruiter_job_params)
     if @recruiter_job.valid?
       Recruiter::JobUpdaterJob.perform_later(@recruiter_job.id, recruiter_job_params)
-      render json: @recruiter_job, status: :ok, location: "v1/recruiter/jobs/#{@recruiter_job.id}"
+      render :show, status: :ok, location: "v1/recruiter/jobs/#{@recruiter_job.id}"
     else
       render json: @recruiter_job.errors, status: :unprocessable_entity
     end
