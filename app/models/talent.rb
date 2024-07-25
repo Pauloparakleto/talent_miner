@@ -5,4 +5,5 @@ class Talent < ApplicationRecord
   has_many :submissions, class_name: "Public::Submission", dependent: :destroy
 
   validates_presence_of :name, :mobile_phone, :email
+  validates :email, :mobile_phone, uniqueness: true
 end
