@@ -34,5 +34,7 @@ module TalentMiner
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
     config.active_job.queue_adapter = :good_job
+    config.available_locales = [:en, :pt]
+    config.i18n.default_locale = :pt
   end
 end

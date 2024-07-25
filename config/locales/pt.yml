@@ -1,0 +1,8 @@
+pt:
+  activerecord:
+    errors:
+      models:
+        public/submission:
+          attributes:
+            talent_id:
+              taken: Prezado candidato, você já aplicou para esta mesma vaga. Por favor, aguarde os próximos passos. Estamos na torcida por você S2
