@@ -3,12 +3,12 @@ require 'rails_helper'
 RSpec.describe "/talent/", type: :request do
   include ActiveJob::TestHelper
 
-  let!(:talent) { Talent.create(valid_attributes) }
+  let(:talent) { Talent.create(valid_attributes) }
   let(:valid_attributes) {
     {
       name: Faker::Name.name,
       email: Faker::Internet.unique.email,
-      mobile_phone: Faker::PhoneNumber.cell_phone
+      mobile_phone: Faker::PhoneNumber.unique.cell_phone
     }
   }
 
@@ -26,7 +26,6 @@ RSpec.describe "/talent/", type: :request do
 
   describe "GET /index" do
     it "renders a successful response" do
-      Talent.create! valid_attributes
       get v1_talents_url, headers: valid_headers, as: :json
       expect(response).to be_successful
     end
@@ -34,7 +33,6 @@ RSpec.describe "/talent/", type: :request do
 
   describe "GET /show" do
     it "renders a successful response" do
-      talent = Talent.create! valid_attributes
       get v1_talent_url(talent), as: :json
       expect(response).to be_successful
     end
