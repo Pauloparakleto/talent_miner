@@ -5,7 +5,10 @@ class V1::Recruiter::JobsController < V1::ApplicationController
   before_action :set_recruiter_job, only: %i[ show update destroy ]
 
   def index
-    @recruiter_jobs = Recruiter::Job.order(:created_at).where(status: STATUS_ACTIVE).page params.fetch(:page, INITIAL_PAGE)
+    @recruiter_jobs = Recruiter::Job.order(:created_at)
+      .where(status: Recruiter::JobEnum::ACTIVE)
+      .page params.fetch(:page, INITIAL_PAGE)
+
     render :index, location: "v1/recruiter/jobs/"
   end
 
