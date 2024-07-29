@@ -1,5 +1,8 @@
 class Recruiter::Job < ApplicationRecord
-  paginates_per 100 
+  include PgSearch::Model
+  pg_search_scope :search_by_default, against: [:title, :description, :skills]
+
+  paginates_per 100
 
   belongs_to :recruiter
 

@@ -23,4 +23,30 @@ RSpec.describe Recruiter::Job, type: :model do
   describe "db column index" do
     it { should have_db_index(:status) }
   end
+
+  describe "search_by_default" do
+   include_context 'with Recruiter::Job'
+
+   before { job.update(title: 'recruiter title', description: 'we Need a desCription') }
+
+   it 'includes title' do
+     expect(described_class.search_by_default('Recruiter').first.title).to eq('recruiter title')
+   end
+   
+   it 'includes description' do
+     expect(described_class.search_by_default('need').first.description).to eq('we Need a desCription')
+   end
+
+   it 'includes ruby skills' do
+     expect(described_class.search_by_default('ruby').first.skills).to include('ruby')
+   end
+ 
+   it 'includes Ruby as ruby skills' do
+     expect(described_class.search_by_default('Ruby').first.skills).to include('ruby')
+   end
+  
+   it 'does not include react skills' do
+     expect(described_class.search_by_default('react')).to be_empty
+   end
+  end
 end

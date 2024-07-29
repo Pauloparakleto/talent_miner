@@ -40,6 +40,15 @@ RSpec.describe "/recruiter/jobs", type: :request do
       expect(response).to be_successful
     end
   end
+  
+  describe "GET /search" do
+    it "renders a successful response" do
+      recruiter
+
+      get search_v1_recruiter_jobs_url('ruby'), headers: valid_headers, as: :json
+      expect(response).to be_successful
+    end
+  end
 
   describe "GET /show" do
     it "renders a successful response" do

@@ -53,3 +53,5 @@ gem "good_job", "2.0"
 gem "kaminari-activerecord", "~> 1.2"
 
 gem "enumerate_it", "~> 3.3"
+
+gem "pg_search", "~> 2.3"
