@@ -64,6 +64,8 @@ GEM
     crass (1.0.6)
     date (3.3.4)
     diff-lcs (1.5.1)
+    enumerate_it (3.3.0)
+      activesupport (>= 5.0.7.2)
     erubi (1.13.0)
     et-orbi (1.2.11)
       tzinfo
@@ -213,6 +215,7 @@ PLATFORMS
 DEPENDENCIES
   bootsnap (>= 1.4.2)
   byebug
+  enumerate_it (~> 3.3)
   faker (~> 3.4)
   ffi (< 1.17.0)
   good_job (= 2.0)
