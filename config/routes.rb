@@ -8,7 +8,11 @@ Rails.application.routes.draw do
     resources :talents, concerns: :paginatable
 
     namespace :recruiter do
-      resources :jobs, concerns: :paginatable
+      resources :jobs, concerns: :paginatable do
+        collection do
+          get :search
+        end
+      end
     end
 
     namespace :public do

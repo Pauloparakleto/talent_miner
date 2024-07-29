@@ -12,6 +12,13 @@ class V1::Recruiter::JobsController < V1::ApplicationController
     render :index, location: "v1/recruiter/jobs/"
   end
 
+  def search
+    @recruiter_jobs = Recruiter::Job.order(:created_at).search_by_default(search_param).where(status: Recruiter::JobEnum::ACTIVE)
+      .page params.fetch(:page, INITIAL_PAGE)
+
+    render :index, location: "v1/recruiter/jobs/"
+  end
+
   def show
     render json: @recruiter_job, status: :ok, location: "v1/recruiter/jobs/#{@recruiter_job.id}"
   end
@@ -41,7 +48,11 @@ class V1::Recruiter::JobsController < V1::ApplicationController
   end
 
   private
-    
+
+  def search_param
+    params.fetch(:query, "")
+  end
+
     def set_recruiter_job
       @recruiter_job = Recruiter::Job.find(params[:id])
     end
